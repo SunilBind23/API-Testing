@@ -1,0 +1,2113 @@
+{
+	"info": {
+		"_postman_id": "f2cb9c20-9f1e-4749-8b49-4e9bad9cfbff",
+		"name": "TestingCOLLection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40305668"
+	},
+	"item": [
+		{
+			"name": "Contact",
+			"item": [
+				{
+					"name": "createcontact",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test for status code\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200); // Ensure the response status code is 200\r",
+									"});\r",
+									"\r",
+									"// Extract response body as JSON\r",
+									"var jsonData = pm.response.json(); // Parse the response JSON\r",
+									"\r",
+									"// Extract user ID from the response\r",
+									"var userId = jsonData.id; // Ensure the 'id' field exists in your response\r",
+									"\r",
+									"// Store the ID in an environment variable\r",
+									"if (userId) {\r",
+									"    pm.environment.set(\"user_id\", userId);\r",
+									"    console.log(\"Stored User ID: \" + userId);\r",
+									"} else {\r",
+									"    console.error(\"Error: ID not found in the response.\");\r",
+									"}\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"first_name\");\r",
+									"});\r",
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Generate a random alphanumeric string\r",
+									"var random = Math.random().toString(36).substring(2);\r",
+									"\r",
+									"// Create dynamic email and username using the random string\r",
+									"var useremail = \"Satish\" + random + \"@gmail.com\";\r",
+									"console.log(useremail)\r",
+									"\r",
+									"var userName = \"satish\" + random;\r",
+									"console.log(userName)\r",
+									"\r",
+									"// Set the generated email and username as environment variables\r",
+									"pm.environment.set(\"email_env\", useremail);\r",
+									"pm.environment.set(\"name_env\", userName);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"star_value\": \"4\",\r\n    \"lead_score\": \"92\",\r\n    \"tags\": [\r\n        \"Lead\",\r\n        \"Likely Buyer\"\r\n    ],\r\n    \"properties\": [\r\n        {\r\n            \"type\": \"SYSTEM\",\r\n            \"name\": \"first_name\",\r\n            \"value\": \"{{name_env}}\"\r\n        },\r\n        {\r\n            \"type\": \"SYSTEM\",\r\n            \"name\": \"last_name\",\r\n            \"value\": \"Nolan\"\r\n        },\r\n        {\r\n            \"type\": \"SYSTEM\",\r\n            \"name\": \"email\",\r\n            \"subtype\": \"work\",\r\n            \"value\": \"{{email_env}}\"\r\n        },\r\n        {\r\n            \"type\": \"SYSTEM\",\r\n            \"name\": \"address\",\r\n            \"value\": \"{\\\"address\\\":\\\"225 George Street\\\",\\\"city\\\":\\\"NSW\\\",\\\"state\\\":\\\"Sydney\\\",\\\"zip\\\":\\\"2000\\\",\\\"country\\\":\\\"Australia\\\"}\"\r\n        },\r\n        {\r\n            \"name\": \"phone\",\r\n            \"value\": \"9328359654\",\r\n            \"subtype\": \"work\"\r\n        },\r\n        {\r\n            \"name\": \"phone\",\r\n            \"value\": \"8888888889\",\r\n            \"subtype\": \"home\"\r\n        },\r\n        {\r\n            \"name\": \"website\",\r\n            \"value\": \"www.youtube.com\",\r\n            \"subtype\": \"YOUTUBE\"\r\n        },\r\n        {\r\n            \"name\": \"website\",\r\n            \"value\": \"www.linkedin.com\",\r\n            \"subtype\": \"LINKEDIN\"\r\n        },\r\n        {\r\n            \"name\": \"website\",\r\n            \"value\": \"www.mywebsite.com\",\r\n            \"subtype\": \"URL\"\r\n        },\r\n        {\r\n            \"name\": \"My custom field of type text\",\r\n            \"type\": \"CUSTOM\",\r\n            \"value\": \"My name is ghanshyam\"\r\n        },\r\n        {\r\n            \"name\": \"My custom field of type date\",\r\n            \"type\": \"CUSTOM\",\r\n            \"value\": 1479580200\r\n        },\r\n        {\r\n            \"name\": \"My custom field of type checkbox\",\r\n            \"type\": \"CUSTOM\",\r\n            \"value\": \"on\"\r\n        },\r\n        {\r\n            \"name\": \"My custom field of type list\",\r\n            \"type\": \"CUSTOM\",\r\n            \"value\": \"lemon\"\r\n        },\r\n        {\r\n            \"name\": \"My custom field of type companies\",\r\n            \"type\": \"CUSTOM\",\r\n            \"value\": \"[\\\"5767466600890368\\\",\\\"5114076984246272\\\",\\\"5746725247516672\\\"]\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{testing}}dev/api/contacts",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"contacts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get contact",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"String match\",function(){\r",
+									"    pm.expect(pm.response.text()).to.include(\"lead_score\")\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{testing}}dev/api/contacts",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"contacts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_contact by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"chek id presen the response body\"),()=>{\r",
+									"var jsonData=pm.response.json();\r",
+									"pm.expect(jsonData.id).to.eql(pm.environment.get(\"user_id\", userId))\r",
+									"pm.expect(jsonData.id).to.eql(pm.environment.get(\"email_env\", useremail))\r",
+									"pm.expect(jsonData.id).to.eql(pm.environment.get(\"name_env\", userName))\r",
+									"console.log(\"Fetched User ID: \" + jsonData.id);\r",
+									"\r",
+									"pm.environment.set(\"user_id\", userId);\r",
+									"\r",
+									"\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{testing}}dev/api/contacts/{{user_id}}",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"contacts",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update properties of a contact by ID (partial update)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Generate a random alphanumeric string\r",
+									"var random = Math.random().toString(36).substring(2);\r",
+									"\r",
+									"// Create dynamic email and username using the random string\r",
+									"var useremail = \"Sam\" + random + \"@gmail.com\";\r",
+									"console.log(useremail)\r",
+									"var userName = \"sam\" + random;\r",
+									"console.log(userName)\r",
+									"\r",
+									"\r",
+									"// Set the generated email and username as environment variables\r",
+									"pm.environment.set(\"emil\", useremail);\r",
+									"pm.environment.set(\"name\", userName);\r",
+									"\r",
+									"// Define an array of dropdown values\r",
+									"const dropdownValues = [\"work\", \"home\", \"mobile\", \"main\",\"other\",\"home fax\",\"work fax\"];\r",
+									"\r",
+									"// Select a random value\r",
+									"const randomValue = dropdownValues[Math.floor(Math.random() * dropdownValues.length)];\r",
+									"\r",
+									"// Store the random value in an environment or collection variable\r",
+									"pm.environment.set(\"selectedDropdownValue\", randomValue);\r",
+									"\r",
+									"// Log the selected value for debugging\r",
+									"console.log(\"Random Dropdown Value:\", randomValue);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"5602980695572480\",\r\n    \"properties\": [\r\n        {\r\n            \"type\": \"SYSTEM\",\r\n            \"name\": \"first_name\",\r\n            \"value\": \"Roshan\"\r\n        },\r\n        {\r\n            \"type\": \"SYSTEM\",\r\n            \"name\": \"last_name\",\r\n            \"value\": \"Nolan\"\r\n        },\r\n        {\r\n            \"type\": \"SYSTEM\",\r\n            \"name\": \"email\",\r\n            \"subtype\": \"{{selectedDropdownValue}}\",\r\n            \"value\": \"{{emil}}\"\r\n        },\r\n        {\r\n            \"type\": \"SYSTEM\",\r\n            \"name\": \"address\",\r\n            \"value\": \"{\\\"address\\\":\\\"225 George Street\\\",\\\"city\\\":\\\"NSW\\\",\\\"state\\\":\\\"Sydney\\\",\\\"zip\\\":\\\"2000\\\",\\\"country\\\":\\\"Australia\\\"}\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{testing}}dev/api/contacts/edit-properties",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"contacts",
+								"edit-properties"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update lead score by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"{{user_id}}\",\r\n    \"lead_score\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{testing}}dev/api/contacts/edit/lead-score",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"contacts",
+								"edit",
+								"lead-score"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update star value by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"{{user_id}}\",\r\n    \"star_value\": 4\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{testing}}dev/api/contacts/edit/add-star",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"contacts",
+								"edit",
+								"add-star"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Work_Gmail",
+			"item": [
+				{
+					"name": "Search contact by email",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "Expert@1234",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "satishpal@expert2024.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email_ids",
+									"value": "[\"{{email_env}}\"]",
+									"description": "[\"satishe6pwup49cee@gmail.com\"]",
+									"type": "text"
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{testing}}dev/api/contacts/search/email",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"contacts",
+								"search",
+								"email"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Serch by emailRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{testing}}dev/api/contacts/search/email/{{email_env}}",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"contacts",
+								"search",
+								"email",
+								"{{email_env}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "{{password}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{username}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Creating  company",
+			"item": [
+				{
+					"name": "Creating a company",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test for status code\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200); // Ensure the response status code is 200\r",
+									"});\r",
+									"\r",
+									"// Extract response body as JSON\r",
+									"var jsonData = pm.response.json(); // Parse the response JSON\r",
+									"\r",
+									"// Extract user ID from the response\r",
+									"var userId = jsonData.id; // Ensure the 'id' field exists in your response\r",
+									"\r",
+									"// Store the ID in an environment variable\r",
+									"if (userId) {\r",
+									"    pm.environment.set(\"user_id\", userId);\r",
+									"    console.log(\"Stored User ID: \" + userId);\r",
+									"} else {\r",
+									"    console.error(\"Error: ID not found in the response.\");\r",
+									"}\r",
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>Property Type</th>\r",
+									"        <th>Property Name</th>\r",
+									"        <th>Property Value</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each response.properties}}\r",
+									"        <tr>\r",
+									"            <td>{{type}}</td>\r",
+									"            <td>{{name}}</td>\r",
+									"            <td>{{value}}</td>\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    return {response: pm.response.json()}\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"type\": \"COMPANY\",\r\n    \"star_value\": 4,\r\n    \"lead_score\": 120,\r\n    \"tags\": [\r\n        \"Permanent\",\r\n        \"USA\",\r\n        \"Hongkong\",\r\n        \"Japan\"\r\n    ],\r\n    \"properties\": [\r\n        {\r\n            \"name\": \"Company Type\",\r\n            \"type\": \"CUSTOM\",\r\n            \"value\": \"E-commerce\"\r\n        },\r\n        {\r\n            \"type\": \"SYSTEM\",\r\n            \"name\": \"name\",\r\n            \"value\": \"bolohi\"\r\n        },\r\n        {\r\n            \"type\": \"SYSTEM\",\r\n            \"name\": \"url\",\r\n            \"value\": \"http://www.bolohi.com/\"\r\n        },\r\n        {\r\n            \"name\": \"email\",\r\n            \"value\": \"care@bolohi.com\",\r\n            \"subtype\": \"\"\r\n        },\r\n        {\r\n            \"name\": \"phone\",\r\n            \"value\": \"32435676890\",\r\n            \"subtype\": \"\"\r\n        },\r\n        {\r\n            \"name\": \"website\",\r\n            \"value\": \"http://www.linkedin.com/company/agile-crm\",\r\n            \"subtype\": \"LINKEDIN\"\r\n        },\r\n        {\r\n            \"name\": \"address\",\r\n            \"value\": \"{\\\"address\\\":\\\"MS 35, 440 N Wolfe Road\\\",\\\"city\\\":\\\"Sunnyvale\\\",\\\"state\\\":\\\"CA\\\",\\\"zip\\\":\\\"94085\\\",\\\"country\\\":\\\"US\\\"}\",\r\n            \"subtype\": \"office\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{testing}}dev/api/contacts",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"contacts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Updating a company",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":{{user_id}},\r\n    \"properties\": [\r\n        {\r\n            \"type\": \"SYSTEM\",\r\n            \"name\": \"name\",\r\n            \"value\": \"sparrow\"\r\n        },\r\n        {\r\n            \"type\": \"SYSTEM\",\r\n            \"name\": \"url\",\r\n            \"value\": \"http://www.sparrow.com/\"\r\n        },\r\n        {\r\n            \"name\": \"email\",\r\n            \"value\": \"care@Sparrow.com\",\r\n            \"subtype\": \"\"\r\n        },\r\n        {\r\n            \"name\": \"phone\",\r\n            \"value\": \"45m23498500000\",\r\n            \"subtype\": \"\"\r\n        },\r\n        {\r\n            \"name\": \"website\",\r\n            \"value\": \"http://www.linkedin.com/company/agile-crm\",\r\n            \"subtype\": \"LINKEDIN\"\r\n        },\r\n        {\r\n            \"name\": \"address\",\r\n            \"value\": \"{\\\"address\\\":\\\"MS 35, 440 N Wolfe Road\\\",\\\"city\\\":\\\"Sunnyvale\\\",\\\"state\\\":\\\"CA\\\",\\\"zip\\\":\\\"94085\\\",\\\"country\\\":\\\"US\\\"}\",\r\n            \"subtype\": \"office\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{testing}}dev/api/contacts/edit-properties",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"contacts",
+								"edit-properties"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get list of companies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "page_size",
+									"value": "25",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{testing}}dev/api/contacts/companies/list",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"contacts",
+								"companies",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get company by ID",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{testing}}dev/api/contacts/{{user_id}}",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"contacts",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Create_Deals",
+			"item": [
+				{
+					"name": "Create deal",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test for status code\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200); // Ensure the response status code is 200\r",
+									"});\r",
+									"\r",
+									"// Extract response body as JSON\r",
+									"var jsonData = pm.response.json(); // Parse the response JSON\r",
+									"\r",
+									"// Extract user ID from the response\r",
+									"var userId = jsonData.id; // Ensure the 'id' field exists in your response\r",
+									"\r",
+									"// Store the ID in an environment variable\r",
+									"if (userId) {\r",
+									"    pm.environment.set(\"user_id\", userId);\r",
+									"    console.log(\"Stored User ID: \" + userId);\r",
+									"} else {\r",
+									"    console.error(\"Error: ID not found in the response.\");\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Deal-Tomato\",\r\n    \"expected_value\": \"500\",\r\n    \"probability\": \"75\",\r\n    \"close_date\": 1455042600,\r\n    \"milestone\": \"Proposal\",\r\n    \"custom_data\": [\r\n        {\r\n            \"name\": \"Group Size\",\r\n            \"value\": \"10\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{testing}}dev/api/opportunity",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"opportunity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listing deals",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{testing}}dev/api/opportunity",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"opportunity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get deal by its ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"chek id presen the response body\"),()=>{\r",
+									"var jsonData=pm.response.json();\r",
+									"pm.expect(jsonData.id).to.eql(pm.environment.get(\"user_id\", userId))\r",
+									"console.log(\"Fetched User ID: \" + jsonData.id);\r",
+									"\r",
+									"pm.environment.set(\"user_id\", userId);\r",
+									"\r",
+									"\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{testing}}dev/api/opportunity/{{user_id}}",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"opportunity",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update deal (Partial update)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"5631693742407680\",\r\n    \"expected_value\": \"1000\",\r\n    \"probability\": \"20\",\r\n    \"contact_ids\": [\r\n        \"5629703511605248\",\r\n        \"5744178885558278\"\r\n    ],\r\n    \"custom_data\": [\r\n        {\r\n            \"name\": \"dealTester\",\r\n            \"value\": \"hello kjcksckbkhello2\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{testing}}dev/api/opportunity/partial-update",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"opportunity",
+								"partial-update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create deal to a contact using email ID",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{testing}}dev/api/opportunity/email/{{Email_var}}",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"opportunity",
+								"email",
+								"{{Email_var}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Bulk delete",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ids\": [\r\n        \"6438183423377408\",\r\n        \"234\",\r\n        \"235\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{testing}}dev/api/opportunity/bulk",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"opportunity",
+								"bulk"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get deals from default track grouped by milestones:",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"// Extract response body as JSON\r",
+									"var jsonData = pm.response.json(); // Parse the response JSON\r",
+									"\r",
+									"// Extract user ID from the response\r",
+									"var pipeline_id = jsonData.id; // Ensure the 'id' field exists in your response\r",
+									"\r",
+									"// Store the ID in an environment variable\r",
+									"if (pipeline_id) {\r",
+									"    pm.environment.set(\"pipeline_id\", pipeline_id);\r",
+									"    console.log(\"pipeline_id ID: \" + pipeline_id);\r",
+									"} else {\r",
+									"    console.error(\"Error: ID not found in the response.\");\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{testing}}dev/api/opportunity/byMilestone",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"opportunity",
+								"byMilestone"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get deals for a particular track (grouped by milestone).",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"chek pipeline_id presen the response body\"),()=>{\r",
+									"var jsonData=pm.response.json();\r",
+									"pm.expect(jsonData.id).to.eql(pm.environment.get(\"pipeline_id\", pipeline_id))\r",
+									"\r",
+									"console.log(\"Fetched pipeline_id ID: \" + jsonData.id);\r",
+									"\r",
+									"pm.environment.set(\"pipeline_id\", pipeline_id);\r",
+									"\r",
+									"\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{testing}}dev/api/opportunity/byPipeline/based?pipeline_id={{pipeline_id}}",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"opportunity",
+								"byPipeline",
+								"based"
+							],
+							"query": [
+								{
+									"key": "pipeline_id",
+									"value": "{{pipeline_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get deals related to specific contact",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{testing}}dev/api/contacts/{{user_id}}/deals",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"contacts",
+								"{{user_id}}",
+								"deals"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove contacts of a deal",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n      \"id\": \"{{user_id}}\",\r\n      \"contact_ids\": [\r\n          \"4537532955164672\",\r\n\t  \"4600356650614784\"\r\n      ]\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{testing}}dev/api/opportunity/partial-update/delete-contact",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"opportunity",
+								"partial-update",
+								"delete-contact"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Notes",
+			"item": [
+				{
+					"name": "Create a note and relate that to contacts :",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"subject\": \" Note the subject\",\r\n    \"description\": \"Note description\",\r\n    \"contact_ids\": [\r\n        \"5688267051630592\",\r\n        \"5721389839417344\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{testing}}dev/api/notes",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"notes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add note to a contact using email ID",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{testing}}dev/api/contacts/email/note/add",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"contacts",
+								"email",
+								"note",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Gets notes related to specific contact :",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{testing}}dev/api/contacts/5688267051630592/notes",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"contacts",
+								"5688267051630592",
+								"notes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create note to a deal",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"subject\": \"Deal From Albany\",\r\n    \"description\": \"This deal came directly from customer. No advertisement and hence very important for us.\",\r\n    \"deal_ids\": [\r\n        \"4946219259592704\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{testing}}dev/api/opportunity/deals/notes",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"opportunity",
+								"deals",
+								"notes"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Task",
+			"item": [
+				{
+					"name": "Create a task:",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"progress\": \"0\",\r\n    \"is_complete\": \"false\",\r\n    \"subject\": \"Need to contact vendor\",\r\n    \"type\": \"MEETING\",\r\n    \"due\": 1459319400,\r\n    \"task_ending_time\": \"12:00\",\r\n    \"owner_id\": \"6263975862861824\",\r\n    \"priority_type\": \"HIGH\",\r\n    \"status\": \"YET_TO_START\",\r\n    \"taskDescription\": \"This is very important. We need to discuss with few vendors about the product.\",\r\n    \"contacts\": [\r\n        \"5719430394806272\"\r\n    ],\r\n    \"notes\": [\r\n        \"5715549623418880\"\r\n    ],\r\n    \"deal_ids\": [\r\n        \"5715549623415649\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{testing}}dev/api/tasks",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get the list of tasks based on given filters:",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{testing}}dev/api/tasks/based",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"tasks",
+								"based"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get the list of pending tasks depending on the number of pending days",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{testing}}dev/api/tasks/pending/3",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"tasks",
+								"pending",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a task based on contact email:",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"subject\": \"Need to contact1\",\r\n    \"type\": \"EMAIL\",\r\n    \"due\": 1456986600,\r\n    \"task_ending_time\": \"12:00\",\r\n    \"priority_type\": \"HIGH\",\r\n    \"status\": \"YET_TO_START\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{testing}}dev/api/tasks/email/{email}",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"tasks",
+								"email",
+								"{email}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a task (Partial update)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"6097891487645696\",\r\n    \"subject\": \"sample\",\r\n    \"type\": \"EMAIL\"\r\n    \"due\": 1448941500,\r\n    \"contacts\": [\r\n        \"5700328880078848\",\r\n        \"6487118603878400\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{testing}}dev/api/tasks/partial-update",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"tasks",
+								"partial-update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listing Tasks :",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{testing}}dev/api/tasks/",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"tasks",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get tasks related to contact",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{testing}}dev/api/contacts/{contact_id}/tasks/sort",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"contacts",
+								"{contact_id}",
+								"tasks",
+								"sort"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Event",
+			"item": [
+				{
+					"name": "Create event",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\t{\r\n        \"id\": 5758048710688768,\r\n        \"start\": 1409682600,\r\n        \"end\": 1409768100,\r\n        \"is_event_starred\": false,\r\n        \"allDay\": true,\r\n        \"title\": \"Today Test event\",\r\n        \"color\": \"red\",\r\n        \"created_time\": 1409569472,\r\n        \"contacts\": [\r\n            {\r\n                \"id\": 721001,\r\n                \"type\": \"PERSON\"\r\n               \r\n            }\r\n        ]\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{testing}}ev/api/events",
+							"host": [
+								"{{testing}}ev"
+							],
+							"path": [
+								"api",
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get list of events",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{testing}}dev/api/events",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get events related to contact:",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{testing}}dev/api/contacts/{contact_id}/events/sort",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"contacts",
+								"{contact_id}",
+								"events",
+								"sort"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update event\\",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\t{\r\n        \"id\": 5758048710688768,\r\n        \"start\": 1409682600,\r\n        \"end\": 1409768100,\r\n        \"is_event_starred\": false,\r\n        \"allDay\": true,\r\n        \"title\": \"Today Test event\",\r\n        \"color\": \"red\",\r\n        \"created_time\": 1409569472,\r\n        \"contacts\": [\r\n            {\r\n                \"id\": 721001,\r\n                \"type\": \"PERSON\"                \r\n            }\r\n        ]\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{testing}}dev/api/events",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"events"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Track/milestone",
+			"item": [
+				{
+					"name": "Create a track",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"id\": 5146448186310656,\r\n   \"milestones\": \"Open,New,Prospect,Proposal,Won,Lost\",\r\n   \"name\": \"Default\"\r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{testing}}dev/api/milestone/pipelines",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"milestone",
+								"pipelines"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all the tracks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{testing}}dev/api/milestone/pipelines",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"milestone",
+								"pipelines"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a track",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n   \"id\": 5146448186310656,\r\n   \"milestones\": \"Open,New,Prospect,Proposal,Won,Lost\",\r\n   \"name\": \"Default\"\r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{testing}}dev/api/milestone/pipelines",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"milestone",
+								"pipelines"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "compaign/Document",
+			"item": [
+				{
+					"name": "List of campaigns",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{testing}}dev/api/workflows",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"workflows"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get documents related to specific contact Request",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{testing}}dev/api/documents/contact/{contact_id}/docs",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"documents",
+								"contact",
+								"{contact_id}",
+								"docs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a document to a contact",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"extension\": \"chrome-window2.PNG\",\r\n    \"doc_type\": \"ATTACHMENT\",\r\n    \"name\": \"Address proof\",\r\n    \"url\": \"https://s3.amazonaws.com/agilecrm/panel/uploaded-logo/ghanshyam/1489549880850/chrome-window2.PNG?id=uploadDocumentForm\",\r\n    \"size\": \"57907\",\r\n    \"network_type\": \"S3\",\r\n    \"contact_ids\": [\r\n        \"5735113836986368\"\r\n    ],\r\n    \"deal_ids\": [\r\n        \"6238333076242432\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{testing}}dev/api/documents",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"documents"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a document to a contact",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{testing}}dev/api/documents",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"documents"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Help_Desk",
+			"item": [
+				{
+					"name": "Get all tickets",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a ticket",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"requester_name\": \"yeki\",\r\n    \"requester_email\": \"yeki@yopmail.com\",\r\n    \"subject\": \"Test not working ??\",\r\n    \"priority\": \"LOW\",\r\n    \"status\": \"OPEN\",\r\n    \"groupID\": \"5756098678095872\",\r\n    \"html_text\": \"Hello I am testing your docs and find that Test is not working. Please help me\",\r\n    \"cc_emails\": [\r\n        \"tester@gmail.com\"\r\n    ],\r\n    \"labels\": null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{testing}}dev/api/tickets/new-ticket",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"tickets",
+								"new-ticket"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all filter IDs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{testing}}dev/api/tickets/filters",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"tickets",
+								"filters"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all messages within a ticket",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{testing}}dev/api/tickets/notes/id",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"tickets",
+								"notes",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add note to a ticket using Ticket id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \t\"ticket_id\":\"{ticket-id}\",\r\n\t\"html_text\":\"Note description\",\r\n\t\"note_type\":\"PUBLIC\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{testing}}dev/api/notes/id",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"notes",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add note to a ticket using Ticket id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \t\"ticket_id\":\"{ticket-id}\",\r\n\t\"html_text\":\"Note description\",\r\n\t\"note_type\":\"private\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{testing}}dev/api/notes/id",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"notes",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "delete_basic  id",
+			"item": [
+				{
+					"name": "Delete single contact",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{testing}}dev/api/contacts/{{user_id}}",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"contacts",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a specific note from specific contact :",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{testing}}dev/api/contacts/5688267051630592/notes/{note_id}",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"contacts",
+								"5688267051630592",
+								"notes",
+								"{note_id}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a task based on ID:",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{testing}}dev/api/tasks/{id}",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"tasks",
+								"{id}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete an event:",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{testing}}dev/api/events/{id}",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"events",
+								"{id}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New ReqDelete a trackuest",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{testing}}dev/api/milestone/pipelines/{id}",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"milestone",
+								"pipelines",
+								"{id}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a ticket",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{testing}}dev/api/tickets/{id}",
+							"host": [
+								"{{testing}}dev"
+							],
+							"path": [
+								"api",
+								"tickets",
+								"{id}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "sunil@2004",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "bindsunil9336@agilecrm.com",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "testing",
+			"value": "https://expert2024.agilecrm.com/",
+			"type": "string"
+		}
+	]
+}
